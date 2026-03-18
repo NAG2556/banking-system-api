@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Banking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="A Next-Gen Premium Banking Interface">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container" id="app">
+        <!-- Auth View -->
+        <div id="auth-view" class="card glass">
+            <h1 class="logo">Nexus<span>Bank</span></h1>
+            <p class="subtitle">Welcome to the future of banking.</p>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">Login</button>
+                <button class="tab" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <form id="auth-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required placeholder="johndoe">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <div class="auth-message" id="auth-msg"></div>
+                <button type="submit" class="btn primary" id="auth-btn">Access Account</button>
+            </form>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="dashboard glass hidden">
+            <header class="dash-header">
+                <div class="user-info">
+                    <h2>Welcome back, <span id="dash-username">User</span>!</h2>
+                    <p class="acc-number">Account: <span id="dash-acc-num">--</span></p>
+                </div>
+                <button class="btn secondary" onclick="logout()">Logout</button>
+            </header>
+
+            <div class="balance-card">
+                <h3>Total Balance</h3>
+                <h1 id="dash-balance">$0.00</h1>
+                <div id="no-acc-msg" class="hidden">
+                    <p>You don't have an active bank account yet.</p>
+                    <button class="btn primary small" onclick="createAccount()">Open Account</button>
+                </div>
+            </div>
+
+            <div class="actions-grid">
+                <button class="btn action-btn glass-btn" onclick="openModal('deposit-modal')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Deposit
+                </button>
+                <button class="btn action-btn glass-btn" onclick="openModal('withdraw-modal')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Withdraw
+                </button>
+                <button class="btn action-btn glass-btn" onclick="openModal('transfer-modal')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><line x1="9" y1="21" x2="15" y2="21"></line><line x1="15" y1="15" x2="21" y2="3"></line><line x1="9" y1="9" x2="3" y2="21"></line></svg>
+                    Transfer
+                </button>
+            </div>
+
+            <div class="transactions">
+                <h3>Recent Activity</h3>
+                <div class="transaction-list" id="tx-list">
+                    <!-- Transactions injected here by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="deposit-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <span class="close" onclick="closeModal('deposit-modal')">&times;</span>
+            <h2>Make a Deposit</h2>
+            <div class="input-group">
+                <label>Amount ($)</label>
+                <input type="number" id="deposit-amount" min="1" step="0.01" placeholder="0.00">
+            </div>
+            <button class="btn primary" onclick="submitTransaction('deposit')">Confirm Deposit</button>
+        </div>
+    </div>
+
+    <div id="withdraw-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <span class="close" onclick="closeModal('withdraw-modal')">&times;</span>
+            <h2>Make a Withdrawal</h2>
+            <div class="input-group">
+                <label>Amount ($)</label>
+                <input type="number" id="withdraw-amount" min="1" step="0.01" placeholder="0.00">
+            </div>
+            <button class="btn primary" onclick="submitTransaction('withdraw')">Confirm Withdrawal</button>
+        </div>
+    </div>
+
+    <div id="transfer-modal" class="modal hidden">
+        <div class="modal-content glass">
+            <span class="close" onclick="closeModal('transfer-modal')">&times;</span>
+            <h2>Send Money</h2>
+            <div class="input-group">
+                <label>Recipient Account Number</label>
+                <input type="text" id="transfer-to" placeholder="e.g. 1234567890">
+            </div>
+            <div class="input-group">
+                <label>Amount ($)</label>
+                <input type="number" id="transfer-amount" min="1" step="0.01" placeholder="0.00">
+            </div>
+            <button class="btn primary" onclick="submitTransaction('transfer')">Confirm Transfer</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
